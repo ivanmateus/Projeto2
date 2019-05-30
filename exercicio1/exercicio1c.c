@@ -40,6 +40,7 @@ int main(int argc, char const *argv[])
 {
     const int N = 50000;
     unsigned encontrados = 0;
+    int achou = 0; //flag para saber se o numero ja foi encontrado
 
     int* entradas = ler_inteiros("inteiros_entrada.txt", N);
     int* consultas = ler_inteiros("inteiros_busca.txt", N);
@@ -48,7 +49,20 @@ int main(int argc, char const *argv[])
     inicia_tempo();
     for (int i = 0; i < N; i++) {
         // buscar o elemento consultas[i] na entrada
+        achou = 0; //supoe-se que nao foi encontrado inicialmente
+        for (int j = 0; j < N && !achou; ++j){ //enquanto nao chegar ao fim e nao achar
+            if(consultas[i] == entradas[j]){    //se achou
+                ++encontrados;  //incrementa os encontrados
+                if(j != 0){ //se nao estiver na primeira posicao, manda o valor para a posicao anterior
+                    int temp = entradas[j];
+                    entradas[j] = entradas[j - 1];
+                    entradas[j - 1] = temp;
+                }
+                achou = 1; //informa que achou
+            }
+        }
     }
+
     double tempo_busca = finaliza_tempo();
 
     printf("Tempo de busca    :\t%fs\n", tempo_busca);

@@ -80,13 +80,32 @@ int main(int argc, char const *argv[])
     string* insercoes = ler_strings("strings_entrada.txt", N);
     string* consultas = ler_strings("strings_busca.txt", M);
 
+    int inseriu = 0;
+    int nao_achou = 0;    
 
     // cria tabela hash com hash por divisão
+    string* tabelaDiv = (string *)malloc(sizeof(string) * B);
+    for(int i = 0; i < B; ++i){
+        tabelaDiv[i] = "";
+    }
 
     // inserção dos dados na tabela hash usando hash por divisão
     inicia_tempo();
     for (int i = 0; i < N; i++) {
         // inserir insercoes[i] na tabela hash
+        inseriu = 0;
+        for(int j = 0; j < B && !inseriu; ++j){
+            int pos = h_div(converter(insercoes[i]), j, B);
+            if(strcmp(tabelaDiv[pos], "") == 0){
+                tabelaDiv[pos] = insercoes[i];
+                if(j != 0){
+                    ++colisoes_h_div;
+                }
+                inseriu = 1;
+            }else if(strcmp(tabelaDiv[pos], insercoes[i]) == 0){
+                inseriu = 1;
+            }
+        }
     }
     double tempo_insercao_h_div = finaliza_tempo();
 
@@ -94,20 +113,51 @@ int main(int argc, char const *argv[])
     inicia_tempo();
     for (int i = 0; i < M; i++) {
         // buscar consultas[i] na tabela hash
+        nao_achou = 0;
+        for(int j = 0; j < B && !nao_achou; ++j){
+            if(consultas[i] != NULL){
+                int pos = h_div(converter(consultas[i]), j, B);
+                if(strcmp(tabelaDiv[pos], consultas[i]) == 0){
+                    ++encontrados_h_div;
+                }
+                if(strcmp(tabelaDiv[pos], "") == 0){
+                    nao_achou = 1;
+                }
+            }
+        }
     }
+    
     double tempo_busca_h_div = finaliza_tempo();
 
     // limpa a tabela hash com hash por divisão
+    for(int i = 0; i < B; ++i){
+        tabelaDiv[i] = "";
+    }
+    free(tabelaDiv);
 
-
-
-
-    // cria tabela hash com hash por divisão
+    // cria tabela hash com hash por multiplicação
+    string* tabelaMul = (string *)malloc(sizeof(string) * B);
+    for(int i = 0; i < B; ++i){
+        tabelaMul[i] = "";
+    }
 
     // inserção dos dados na tabela hash usando hash por multiplicação
     inicia_tempo();
     for (int i = 0; i < N; i++) {
         // inserir insercoes[i] na tabela hash
+        inseriu = 0;
+        for(int j = 0; j < B && !inseriu; ++j){
+            int pos = h_mul(converter(insercoes[i]), j, B);
+            if(strcmp(tabelaMul[pos], "") == 0){
+                tabelaMul[pos] = insercoes[i];
+                if(j != 0){
+                    ++colisoes_h_mul;
+                }
+                inseriu = 1;
+            }else if(strcmp(tabelaMul[pos], insercoes[i]) == 0){
+                inseriu = 1;
+            }
+        }
     }
     double tempo_insercao_h_mul = finaliza_tempo();
 
@@ -115,11 +165,26 @@ int main(int argc, char const *argv[])
     inicia_tempo();
     for (int i = 0; i < M; i++) {
         // buscar consultas[i] na tabela hash
+        nao_achou = 0;
+        for(int j = 0; j < B && !nao_achou; ++j){
+            if(consultas[i] != NULL){
+                int pos = h_mul(converter(consultas[i]), j, B);
+                if(strcmp(tabelaMul[pos], consultas[i]) == 0){
+                    ++encontrados_h_mul;
+                }
+                if(strcmp(tabelaMul[pos], "") == 0){
+                    nao_achou = 1;
+                }
+            }
+        }
     }
     double tempo_busca_h_mul = finaliza_tempo();
 
     // limpa a tabela hash com hash por multiplicação
-
+    for(int i = 0; i < B; ++i){
+        tabelaMul[i] = "";
+    }
+    free(tabelaMul);
 
 
     printf("Hash por Divisão\n");

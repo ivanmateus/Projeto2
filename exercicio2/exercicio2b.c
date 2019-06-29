@@ -57,7 +57,7 @@ unsigned h_mul(unsigned x, unsigned i, unsigned B) {
 }
 
 unsigned h_second(unsigned x, unsigned i, unsigned B) {
-    return (h_div(x, i, B) * i * h_mul(x, i, B)) % B;
+    return (h_div(x, i, B) + i * h_mul(x, i, B)) % B;
 }
 
 int main(int argc, char const* argv[]) {

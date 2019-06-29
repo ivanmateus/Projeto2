@@ -63,7 +63,7 @@ unsigned h_second(unsigned x, unsigned i, unsigned B) {
 int main(int argc, char const* argv[]) {
     const int N = 50000;
     const int M = 70000;
-    const int B = 50021;
+    const int B = 150001;
 
     unsigned colisoes = 0;
     unsigned encontrados = 0;

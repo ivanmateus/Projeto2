@@ -86,7 +86,7 @@ List* free_list(List* head) {
 int main(int argc, char const* argv[]) {
     const int N = 50000;
     const int M = 70000;
-    const int B = 50021;
+    const int B = 150001;
 
     unsigned colisoes_h_div = 0;
     unsigned colisoes_h_mul = 0;
@@ -181,14 +181,14 @@ int main(int argc, char const* argv[]) {
 
     printf("Hash por Divisão\n");
     printf("Colisões na inserção: %d\n", colisoes_h_div);
-    printf("Tempo de inserção   : %fs\n", tempo_insercao_h_div);
-    printf("Tempo de busca      : %fs\n", tempo_busca_h_div);
+    printf("Tempo de inserção   : %.12lfs\n", tempo_insercao_h_div);
+    printf("Tempo de busca      : %.12lfs\n", tempo_busca_h_div);
     printf("Itens encontrados   : %d\n", encontrados_h_div);
     printf("\n");
     printf("Hash por Multiplicação\n");
     printf("Colisões na inserção: %d\n", colisoes_h_mul);
-    printf("Tempo de inserção   : %fs\n", tempo_insercao_h_mul);
-    printf("Tempo de busca      : %fs\n", tempo_busca_h_mul);
+    printf("Tempo de inserção   : %.12lfs\n", tempo_insercao_h_mul);
+    printf("Tempo de busca      : %.12lfs\n", tempo_busca_h_mul);
     printf("Itens encontrados   : %d\n", encontrados_h_mul);
 
     return 0;

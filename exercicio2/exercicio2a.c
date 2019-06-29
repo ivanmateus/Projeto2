@@ -58,7 +58,7 @@ unsigned h_mul(unsigned x, unsigned i, unsigned B) {
 int main(int argc, char const* argv[]) {
     unsigned N = 50000;
     unsigned M = 70000;
-    unsigned B = 50021;
+    unsigned B = 150001;
 
     unsigned colisoes_h_div = 0;
     unsigned colisoes_h_mul = 0;
